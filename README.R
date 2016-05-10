@@ -133,23 +133,6 @@ add_vecs2<-function(vec1,vec2){
 
 system.time(add_vecs2(large_vec1,large_vec2))
 
-## ----odd_even_return-----------------------------------------------------
-odd_even<-function(num){
-  if(num %% 2 == 0){
-    return("EVEN")
-  } 
-  return("ODD")
-}
-
-## ----sum_vec_return------------------------------------------------------
-sum_vec<-function(vec){
-  j<-0
-  for(i in vec){
-    j<-i+j
-  }
-  return(j)
-}
-
 ## ----Exercise1, echo=FALSE-----------------------------------------------
 
 ## ----ggplot_starter function, eval=FALSE---------------------------------
@@ -164,6 +147,6 @@ sum_vec<-function(vec){
 ##   }
 ## 
 ##   #Need to return something ...
-##   return()
+## 
 ## }
 
