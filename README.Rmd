@@ -23,8 +23,7 @@ function_name<-function(arguments){
 ```
 So a real example, without arguments might look like:
 
-
-```r
+```{r function_create}
 hw<-function(){
   print("Hello, World")
 }
@@ -32,34 +31,18 @@ hw<-function(){
 hw()
 ```
 
-```
-## [1] "Hello, World"
-```
-
 Well that's nice...  Not really useful, but shows the main components, `function()`, and the `{}` which are really the only new things.  Also,  each function comes with some basic information attached to it and have functions associated with them.  These are the `formals()`, the `body()`, and the `environment()`.  
 
 The `formals()` are the argument list.  Our function doesn't have any arguments so we don't get `NULL` back. 
 
-
-```r
+```{r}
 formals(hw)
-```
-
-```
-## NULL
-```
+``` 
 
 The `body()` is the code that sits inside of the outermost `{}`.  So for `hw()` we get:
 
-
-```r
+```{r}
 body(hw)
-```
-
-```
-## {
-##     print("Hello, World")
-## }
 ```
 
 The `environment()` describes the names and objects in memory you have access to.  We aren't going to go into this today. 
@@ -68,39 +51,19 @@ The two pieces of the functions we will focus on are the formals (I'll call them
 
 So, lets add some arguments to make our function a bit better and  more flexible. For example,
 
-
-```r
+```{r function2_create}
 p<-function(my_text){
   print(my_text)
 }
 
 p("Hello, world")
-```
-
-```
-## [1] "Hello, world"
-```
-
-```r
 p("Hola, mundo")
-```
-
-```
-## [1] "Hola, mundo"
-```
-
-```r
 p("Howdy, Texas")
-```
-
-```
-## [1] "Howdy, Texas"
 ```
 
 So, this is of course a bit of a silly example.  Functions are useful when we want to combine many other functions together that do something useful that we might want to repeat.  For example maybe we had a plot that we wanted to re-create with different data and save the output.  A function that does this might look like:
 
-
-```r
+```{r plot_function_examp}
 myplot<-function(x,y,grp,file){
   my_p<-ggplot(data.frame(x,y,grp),aes(x=x,y=y)) +
             geom_point(aes(color=grp, shape=grp),size=5) +
@@ -111,18 +74,7 @@ myplot<-function(x,y,grp,file){
 }
 
 myplot(iris$Petal.Length,iris$Petal.Width,iris$Species,"petal_petal.jpg")
-```
-
-```
-## Error in myplot(iris$Petal.Length, iris$Petal.Width, iris$Species, "petal_petal.jpg"): could not find function "ggplot"
-```
-
-```r
 myplot(iris$Sepal.Length,iris$Sepal.Width,iris$Species,"sepal_l_petal_w.jpg")
-```
-
-```
-## Error in myplot(iris$Sepal.Length, iris$Sepal.Width, iris$Species, "sepal_l_petal_w.jpg"): could not find function "ggplot"
 ```
 
 Cool, a function, that does something useful.  It still is just a collection of functions at this point though.  What if we wanted to repeat something or have the function make some decisions and do one thing given a set of criteria and something else for a different set?  Well we need to look more at some of the classic programming structures in R.  For this introduction, I am going to look just at `if-else` statements, `for` loops (some in the R world think this to be bad since R is optimized for working on vectors, but I think the concept useful and I'm writing this, so there!),  and `return()`.  
@@ -132,8 +84,7 @@ If you have done any programing in any language, then `if-else` statements are n
 
 I will show the examples in the context of a function as that is how they are most commonly used. So, we can implement them in R like:
 
-
-```r
+```{r if_else_examp}
 odd_even<-function(num){
   if(num %% 2 == 0){
     print("EVEN")
@@ -143,24 +94,12 @@ odd_even<-function(num){
 }
 
 odd_even(27)
-```
-
-```
-## [1] "ODD"
-```
-
-```r
 odd_even(34)
-```
-
-```
-## [1] "EVEN"
 ```
 
 And you can you use multiple `if` statements
 
-
-```r
+```{r if_else_examp2}
 plus_minus<-function(num){
   if(num>0){
     print("plus")
@@ -172,26 +111,8 @@ plus_minus<-function(num){
 }
  
 plus_minus(198)
-```
-
-```
-## [1] "plus"
-```
-
-```r
 plus_minus(-44)
-```
-
-```
-## [1] "minus"
-```
-
-```r
 plus_minus(37*0)
-```
-
-```
-## [1] "zero"
 ```
 
 ## for
@@ -206,8 +127,7 @@ for(a_name in a_range){
 
 And an example in a function.
 
-
-```r
+```{r for_examp1}
 p_vec<-function(vec){
   for(i in vec){
     print(i)
@@ -215,49 +135,11 @@ p_vec<-function(vec){
 }
 
 p_vec(1:2)
-```
-
-```
-## [1] 1
-## [1] 2
-```
-
-```r
 p_vec(letters)
-```
-
-```
-## [1] "a"
-## [1] "b"
-## [1] "c"
-## [1] "d"
-## [1] "e"
-## [1] "f"
-## [1] "g"
-## [1] "h"
-## [1] "i"
-## [1] "j"
-## [1] "k"
-## [1] "l"
-## [1] "m"
-## [1] "n"
-## [1] "o"
-## [1] "p"
-## [1] "q"
-## [1] "r"
-## [1] "s"
-## [1] "t"
-## [1] "u"
-## [1] "v"
-## [1] "w"
-## [1] "x"
-## [1] "y"
-## [1] "z"
 ```
 But it'd be nice to do something besides print the values to the screen.  We could create our own sum function.
 
-
-```r
+```{r for_examp2}
 sum_vec<-function(vec){
   j<-0
   for(i in vec){
@@ -267,35 +149,13 @@ sum_vec<-function(vec){
 }
 
 sum_vec(1:2)
-```
-
-```
-## [1] 1
-## [1] 3
-```
-
-```r
 sum_vec(1:10)
-```
-
-```
-## [1] 1
-## [1] 3
-## [1] 6
-## [1] 10
-## [1] 15
-## [1] 21
-## [1] 28
-## [1] 36
-## [1] 45
-## [1] 55
 ```
 Again a bit of a silly example since all it is doing is looping through a list of values and summing it.  In reality you would just use `sum()`.  This also highlights the fact that loops in R can be slow compared to vector operations and/or primitive operations (see Hadley's section on [Primitive functions](http://adv-r.had.co.nz/Functions.html#function-components)).  
 
 We can also use loops to repeat some operations.  Perhaps a bootstrapped sample?
 
-
-```r
+```{r boot}
 mean_boot <- function(vec, R=100){
   out<-NULL
   for(i in 1:R){
@@ -305,25 +165,13 @@ mean_boot <- function(vec, R=100){
 }
 
 mean_boot(rnorm(100))
-```
-
-```
-## [1] 0.09587348
-```
-
-```r
 mean_boot(iris$Petal.Length,R=5000)
-```
-
-```
-## [1] 3.762333
 ```
 
 Lastly, let's dig a bit more into the timing issue with another example (using the `sum()` example is a bit unfair since `sum()` is actually implemented in C).  This time, let's look at adding two vectors together.  We haven't touched on this yet, but R is really good at dealing with this kind of operation.  It is what people mean when they talk about "vectorized" operations.  For instance:
 
 
-
-```r
+```{r for_examp_print}
 # A simple vectorize operation
 x<-1:100
 y<-100:1
@@ -331,19 +179,9 @@ z<-x+y
 z
 ```
 
-```
-##   [1] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [18] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [35] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [52] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [69] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [86] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-```
-
 Pretty cool.  This kind of thing doesn't come easily with many languages.  You would need to program it yourself using a loop.  For the sake of argument, let's try that with R.
 
-
-```r
+``` {r looping_vector_examp}
 #We will assume vectors of the same length...
 add_vecs<-function(vec1,vec2){
   out<-NULL
@@ -355,46 +193,22 @@ add_vecs<-function(vec1,vec2){
 add_vecs(x,y)
 ```
 
-```
-##   [1] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [18] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [35] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [52] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [69] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-##  [86] 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101
-```
-
 So, these do the same thing, big deal.  It is big though when you look at the timing of the two.  Let's create two large vectors and see what happens.
 
-
-```r
+```{r for_vector_time}
 large_vec1<-as.numeric(1:100000)
 large_vec2<-as.numeric(100000:1)
 #Different speed
 vec_time<-system.time(large_vec1+large_vec2)
 loop_time<-system.time(add_vecs(large_vec1,large_vec2))
 vec_time
-```
-
-```
-##    user  system elapsed 
-##   0.000   0.000   0.001
-```
-
-```r
 loop_time
-```
-
-```
-##    user  system elapsed 
-##   6.036   0.001   6.040
 ```
 
 Wow, quite a difference in time! It is examples like this that lead to all the talk around why R is slow at looping.  In general I agree that if there is an obvious vectorized/base solution (in this case simply adding the two vectors) use that.  That being said, it isn't always obvious what the vectorized solution would be. In that case there are some easy things to do to speed this up.  With loops that write to an object and that object is getting re-sized, we may also know the final size of that object so we can do one simple thing to dramatically improve perfomance: pre-allocate your memory, like this:
 
 
-
-```r
+``` {r looping_vector_examp2}
 #We will assume vectors of the same length...
 add_vecs2<-function(vec1,vec2){
   out<-vector("numeric",length(vec1))
@@ -407,11 +221,6 @@ add_vecs2<-function(vec1,vec2){
 system.time(add_vecs2(large_vec1,large_vec2))
 ```
 
-```
-##    user  system elapsed 
-##   0.085   0.000   0.085
-```
-
 Now thats better.  In short, if an obvious vector or primitive solution exists, use that.  If those aren't clear and you need to use a loop, don't be afraid to use one.  There are plenty of examples where a vectorized solution exists for a loop, but it may be difficult to code and understand.  Personally, I think it is possible to go too far down the vectorized path.  Do it when it makes sense, otherwise take advantage of the for loop! You can always try and speed things up after you have got your code working the first time.
 
 ## return
@@ -419,8 +228,7 @@ The last control structure we are going to talk about is `return()`.  All `retur
 
 First, `odd_even()`
 
-
-```r
+```{r odd_even_return}
 odd_even<-function(num){
   if(num %% 2 == 0){
     return("EVEN")
@@ -431,8 +239,7 @@ odd_even<-function(num){
 
 Now, `sum_vec()`
 
-
-```r
+```{r sum_vec_return}
 sum_vec<-function(vec){
   j<-0
   for(i in vec){
@@ -442,7 +249,8 @@ sum_vec<-function(vec){
 }
 ```
 
-
+```{r Exercise1, echo=FALSE}
+```
 
 ## Exercise 1
 For this exercise we are going to practice with functions and some of the control structures.
@@ -450,8 +258,7 @@ For this exercise we are going to practice with functions and some of the contro
 1. Our first task is to create a simple function.  This one is a bit contrived, but wanted let you try it first before we work on our NLA data.  Create a function that allows you to calculate the mean or standard deviation (hint: sd()) of an input vector.
 2. Our second task is going to be to take your last `ggplot2` plot, and turn that into a function.  The function should take an x and y as input, and have an optional argument for a file name to save it as an image.  Depending on how complex your plot was you may need to add in some additional arguments.  To help things along, I have provided some starter code:
 
-
-```r
+```{r ggplot_starter function, eval=FALSE}
 plot_nla<-function(x,y,out=NULL){
   #ggplot2 code
   #Note: ggplot requires a data frame as input.  How would you deal with that?
