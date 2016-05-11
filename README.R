@@ -1,5 +1,5 @@
 ## ----function_create-----------------------------------------------------
-hw<-function(){
+hw <- function(){
   print("Hello, World")
 }
 
@@ -12,7 +12,7 @@ formals(hw)
 body(hw)
 
 ## ----function2_create----------------------------------------------------
-p<-function(my_text){
+p <- function(my_text){
   print(my_text)
 }
 
@@ -21,8 +21,8 @@ p("Hola, mundo")
 p("Howdy, Texas")
 
 ## ----plot_function_examp-------------------------------------------------
-myplot<-function(x,y,grp,file){
-  my_p<-ggplot(data.frame(x,y,grp),aes(x=x,y=y)) +
+myplot <- function(x,y,grp,file){
+  my_p <- ggplot(data.frame(x,y,grp),aes(x=x,y=y)) +
             geom_point(aes(color=grp, shape=grp),size=5) +
             geom_smooth(method="lm",aes(colour=grp))+
             labs(x=substitute(x),y=substitute(y))
@@ -34,7 +34,7 @@ myplot(iris$Petal.Length,iris$Petal.Width,iris$Species,"petal_petal.jpg")
 myplot(iris$Sepal.Length,iris$Sepal.Width,iris$Species,"sepal_l_petal_w.jpg")
 
 ## ----if_else_examp-------------------------------------------------------
-odd_even<-function(num){
+odd_even <- function(num){
   if(num %% 2 == 0){
     print("EVEN")
   } else {
@@ -46,7 +46,7 @@ odd_even(27)
 odd_even(34)
 
 ## ----if_else_examp2------------------------------------------------------
-plus_minus<-function(num){
+plus_minus <- function(num){
   if(num>0){
     print("plus")
   } else if (num < 0) {
@@ -61,7 +61,7 @@ plus_minus(-44)
 plus_minus(37*0)
 
 ## ----for_examp1----------------------------------------------------------
-p_vec<-function(vec){
+p_vec <- function(vec){
   for(i in vec){
     print(i)
   }
@@ -71,10 +71,10 @@ p_vec(1:2)
 p_vec(letters)
 
 ## ----for_examp2----------------------------------------------------------
-sum_vec<-function(vec){
-  j<-0
+sum_vec <- function(vec){
+  j <- 0
   for(i in vec){
-    j<-i+j
+    j <- i+j
     print(j)
   }
 }
@@ -83,10 +83,10 @@ sum_vec(1:2)
 sum_vec(1:10)
 
 ## ----boot----------------------------------------------------------------
-mean_boot <- function(vec, R=100){
-  out<-NULL
+mean_boot  <-  function(vec, R=100){
+  out <- NULL
   for(i in 1:R){
-    out[i]<-mean(sample(vec,length(vec),replace=T))
+    out[i] <- mean(sample(vec,length(vec),replace=T))
   }
   median(out)
 }
@@ -95,38 +95,38 @@ mean_boot(rnorm(100))
 mean_boot(iris$Petal.Length,R=5000)
 
 ## ----for_examp_print-----------------------------------------------------
-# A simple vectorize operation
-x<-1:100
-y<-100:1
-z<-x+y
+# A simple vectorized operation
+x <- 1:100
+y <- 100:1
+z <- x+y
 z
 
 ## ----looping_vector_examp------------------------------------------------
 #We will assume vectors of the same length...
-add_vecs<-function(vec1,vec2){
-  out<-NULL
+add_vecs <- function(vec1,vec2){
+  out <- NULL
   for(i in 1:length(vec1)){
-    out[i]<-vec1[i]+vec2[i]
+    out[i] <- vec1[i]+vec2[i]
   }
   out
 }
 add_vecs(x,y)
 
 ## ----for_vector_time-----------------------------------------------------
-large_vec1<-as.numeric(1:100000)
-large_vec2<-as.numeric(100000:1)
+large_vec1 <- as.numeric(1:100000)
+large_vec2 <- as.numeric(100000:1)
 #Different speed
-vec_time<-system.time(large_vec1+large_vec2)
-loop_time<-system.time(add_vecs(large_vec1,large_vec2))
+vec_time <- system.time(large_vec1+large_vec2)
+loop_time <- system.time(add_vecs(large_vec1,large_vec2))
 vec_time
 loop_time
 
 ## ----looping_vector_examp2-----------------------------------------------
 #We will assume vectors of the same length...
-add_vecs2<-function(vec1,vec2){
-  out<-vector("numeric",length(vec1))
+add_vecs2 <- function(vec1,vec2){
+  out <- vector("numeric",length(vec1))
   for(i in 1:length(vec1)){
-    out[i]<-vec1[i]+vec2[i]
+    out[i] <- vec1[i]+vec2[i]
   }
   out
 }
@@ -136,7 +136,7 @@ system.time(add_vecs2(large_vec1,large_vec2))
 ## ----Exercise1, echo=FALSE-----------------------------------------------
 
 ## ----ggplot_starter function, eval=FALSE---------------------------------
-## plot_nla<-function(x,y,out=NULL){
+## plot_nla <- function(x,y,out=NULL){
 ##   #ggplot2 code
 ##   #Note: ggplot requires a data frame as input.  How would you deal with that?
 ## 

@@ -1,21 +1,25 @@
+
+```
+## Error in eval(expr, envir, enclos): object 'opts_chunk' not found
+```
+
+
 # R programming basics
-This presentation will cover, how to create your own functions, and how to use basic programming control structures.  In particular we will cover:
+This presentation will cover, how to create your own functions, and how to use basic programming control structures.  I am assuming basic familiarity with R and R function syntax.  In particular we will cover:
 
 - [`function()`](#functions-and-programming-with-r)
 - [if-else statements](#if-else)
 - [for loops](#for)
 
 
-***note:*** This materials was borrowed liberally from the [US EPA Intro to R workshop: Lesson 8](http://usepa.github.io/introR/2015/01/15/08-Repeat-Reproduce/)
+***note:*** These materials were borrowed liberally from the [US EPA Intro to R workshop: Lesson 8](http://usepa.github.io/introR/2015/01/15/08-Repeat-Reproduce/)
 
 ## Functions and Programming with R
-For this presentation I am assuming basic familiarity with R and R function syntax.   
-
 We know quite a bit about functions.  They have a name, some arguments, and they do something.  Some return a value, some don't.  In short they form the basic structure of R.  One of the cool things about R (and programming in general), is that we are not stuck with the functions provided to us.  We can (and should!) develop our own as we often want to do things repeatedly, and in slightly different contexts.  Creating a function to deal with this fact helps us a great deal because we do not have to repeat ourselves, we can just use what we have already written.  Creating a function is really easy.  We use the `function()` function.  It has the basic structure of: 
 
 
 ```
-function_name<-function(arguments){
+function_name <- function(arguments){
   code goes here
   use arguments as needed
 }
@@ -24,7 +28,7 @@ So a real example, without arguments might look like:
 
 
 ```r
-hw<-function(){
+hw <- function(){
   print("Hello, World")
 }
 
@@ -37,7 +41,7 @@ hw()
 
 Well that's nice...  Not really useful, but shows the main components, `function()`, and the `{}` which are really the only new things.  Also,  each function comes with some basic information attached to it and have functions associated with them.  These are the `formals()`, the `body()`, and the `environment()`.  
 
-The `formals()` are the argument list.  Our function doesn't have any arguments so we don't get `NULL` back. 
+The `formals()` returns the argument list.  Our function doesn't have any arguments so we get `NULL` back. 
 
 
 ```r
@@ -65,11 +69,11 @@ The `environment()` describes the names and objects in memory you have access to
 
 The two pieces of the functions we will focus on are the formals (I'll call them arguments) and the body.
 
-So, lets add some arguments to make our function a bit better and  more flexible. For example,
+Lets add some arguments to make our function a bit better and  more flexible. For example,
 
 
 ```r
-p<-function(my_text){
+p <- function(my_text){
   print(my_text)
 }
 
@@ -96,12 +100,12 @@ p("Howdy, Texas")
 ## [1] "Howdy, Texas"
 ```
 
-So, this is of course a bit of a silly example.  Functions are useful when we want to combine many other functions together that do something useful that we might want to repeat.  For example maybe we had a plot that we wanted to re-create with different data and save the output.  A function that does this might look like:
+This is of course a bit of a silly example.  Functions are useful when we want to combine many other functions together that do something useful that we might want to repeat.  For example, maybe we had a plot that we wanted to re-create with different data and save the output.  A function that does this might look like:
 
 
 ```r
-myplot<-function(x,y,grp,file){
-  my_p<-ggplot(data.frame(x,y,grp),aes(x=x,y=y)) +
+myplot <- function(x,y,grp,file){
+  my_p <- ggplot(data.frame(x,y,grp),aes(x=x,y=y)) +
             geom_point(aes(color=grp, shape=grp),size=5) +
             geom_smooth(method="lm",aes(colour=grp))+
             labs(x=substitute(x),y=substitute(y))
@@ -113,18 +117,22 @@ myplot(iris$Petal.Length,iris$Petal.Width,iris$Species,"petal_petal.jpg")
 ```
 
 ```
-## Error in myplot(iris$Petal.Length, iris$Petal.Width, iris$Species, "petal_petal.jpg"): could not find function "ggplot"
+## Saving 7 x 7 in image
 ```
+
+![plot of chunk plot_function_examp](figure/plot_function_examp-1.png)
 
 ```r
 myplot(iris$Sepal.Length,iris$Sepal.Width,iris$Species,"sepal_l_petal_w.jpg")
 ```
 
 ```
-## Error in myplot(iris$Sepal.Length, iris$Sepal.Width, iris$Species, "sepal_l_petal_w.jpg"): could not find function "ggplot"
+## Saving 7 x 7 in image
 ```
 
-Cool, a function, that does something useful.  It still is just a collection of functions at this point though.  What if we wanted to repeat something or have the function make some decisions and do one thing given a set of criteria and something else for a different set?  Well we need to look more at some of the classic programming structures in R.  For this introduction, I am going to look just at `if-else` statements, `for` loops (some in the R world think this to be bad since R is optimized for working on vectors, but I think the concept useful and I'm writing this, so there!),  and `return()`.  
+![plot of chunk plot_function_examp](figure/plot_function_examp-2.png)
+
+Cool, a function, that does something useful.  It still is just a collection of functions at this point though.  What if we wanted to repeat something or have the function make some decisions and do one thing given a set of criteria and something else for a different set?  Well we need to look more at some of the classic programming structures in R.  For this introduction, I am going to look just at `if-else` statements and `for` loops (some in the R world think this to be bad since R is optimized for working on vectors, but I think the concept useful and I'm writing this, so there!).  
 
 ### if-else
 If you have done any programing in any language, then `if-else` statements are not new to you.  All they do is allow us to tell the function how to make some decisions.  
@@ -133,7 +141,7 @@ I will show the examples in the context of a function as that is how they are mo
 
 
 ```r
-odd_even<-function(num){
+odd_even <- function(num){
   if(num %% 2 == 0){
     print("EVEN")
   } else {
@@ -160,7 +168,7 @@ And you can you use multiple `if` statements
 
 
 ```r
-plus_minus<-function(num){
+plus_minus <- function(num){
   if(num>0){
     print("plus")
   } else if (num < 0) {
@@ -207,7 +215,7 @@ And an example in a function.
 
 
 ```r
-p_vec<-function(vec){
+p_vec <- function(vec){
   for(i in vec){
     print(i)
   }
@@ -257,10 +265,10 @@ But it'd be nice to do something besides print the values to the screen.  We cou
 
 
 ```r
-sum_vec<-function(vec){
-  j<-0
+sum_vec <- function(vec){
+  j <- 0
   for(i in vec){
-    j<-i+j
+    j <- i+j
     print(j)
   }
 }
@@ -295,10 +303,10 @@ We can also use loops to repeat some operations.  Perhaps a bootstrapped sample?
 
 
 ```r
-mean_boot <- function(vec, R=100){
-  out<-NULL
+mean_boot  <-  function(vec, R=100){
+  out <- NULL
   for(i in 1:R){
-    out[i]<-mean(sample(vec,length(vec),replace=T))
+    out[i] <- mean(sample(vec,length(vec),replace=T))
   }
   median(out)
 }
@@ -307,7 +315,7 @@ mean_boot(rnorm(100))
 ```
 
 ```
-## [1] -0.01936787
+## [1] -0.1053921
 ```
 
 ```r
@@ -323,10 +331,10 @@ Lastly, let's dig a bit more into the timing issue with another example (using t
 
 
 ```r
-# A simple vectorize operation
-x<-1:100
-y<-100:1
-z<-x+y
+# A simple vectorized operation
+x <- 1:100
+y <- 100:1
+z <- x+y
 z
 ```
 
@@ -344,10 +352,10 @@ Pretty cool.  This kind of thing doesn't come easily with many languages.  You w
 
 ```r
 #We will assume vectors of the same length...
-add_vecs<-function(vec1,vec2){
-  out<-NULL
+add_vecs <- function(vec1,vec2){
+  out <- NULL
   for(i in 1:length(vec1)){
-    out[i]<-vec1[i]+vec2[i]
+    out[i] <- vec1[i]+vec2[i]
   }
   out
 }
@@ -367,17 +375,17 @@ So, these do the same thing, big deal.  It is big though when you look at the ti
 
 
 ```r
-large_vec1<-as.numeric(1:100000)
-large_vec2<-as.numeric(100000:1)
+large_vec1 <- as.numeric(1:100000)
+large_vec2 <- as.numeric(100000:1)
 #Different speed
-vec_time<-system.time(large_vec1+large_vec2)
-loop_time<-system.time(add_vecs(large_vec1,large_vec2))
+vec_time <- system.time(large_vec1+large_vec2)
+loop_time <- system.time(add_vecs(large_vec1,large_vec2))
 vec_time
 ```
 
 ```
 ##    user  system elapsed 
-##   0.001   0.000   0.001
+##   0.001   0.000   0.000
 ```
 
 ```r
@@ -386,7 +394,7 @@ loop_time
 
 ```
 ##    user  system elapsed 
-##   6.129   0.000   6.131
+##  22.049   0.000  21.940
 ```
 
 Wow, quite a difference in time! It is examples like this that lead to all the talk around why R is slow at looping.  In general I agree that if there is an obvious vectorized/base solution (in this case simply adding the two vectors) use that.  That being said, it isn't always obvious what the vectorized solution would be. In that case there are some easy things to do to speed this up.  With loops that write to an object and that object is getting re-sized, we may also know the final size of that object so we can do one simple thing to dramatically improve perfomance: pre-allocate your memory, like this:
@@ -395,10 +403,10 @@ Wow, quite a difference in time! It is examples like this that lead to all the t
 
 ```r
 #We will assume vectors of the same length...
-add_vecs2<-function(vec1,vec2){
-  out<-vector("numeric",length(vec1))
+add_vecs2 <- function(vec1,vec2){
+  out <- vector("numeric",length(vec1))
   for(i in 1:length(vec1)){
-    out[i]<-vec1[i]+vec2[i]
+    out[i] <- vec1[i]+vec2[i]
   }
   out
 }
@@ -408,7 +416,7 @@ system.time(add_vecs2(large_vec1,large_vec2))
 
 ```
 ##    user  system elapsed 
-##   0.084   0.000   0.084
+##   0.168   0.000   0.109
 ```
 
 Now thats better.  In short, if an obvious vector or primitive solution exists, use that.  If those aren't clear and you need to use a loop, don't be afraid to use one.  There are plenty of examples where a vectorized solution exists for a loop, but it may be difficult to code and understand.  Personally, I think it is possible to go too far down the vectorized path.  Do it when it makes sense, otherwise take advantage of the for loop! You can always try and speed things up after you have got your code working the first time.
@@ -423,7 +431,7 @@ For this exercise we are going to practice with functions and some of the contro
 
 
 ```r
-plot_nla<-function(x,y,out=NULL){
+plot_nla <- function(x,y,out=NULL){
   #ggplot2 code
   #Note: ggplot requires a data frame as input.  How would you deal with that?
   
